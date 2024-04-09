@@ -4,7 +4,9 @@
   "description": "A simple todo app using TS",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
   },
   "author": "Syed Amaan Ali",
   "license": "ISC",
