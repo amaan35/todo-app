@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface Todo extends Document{
+export interface TypeTodo extends Document{
     name: string
     desc: string
     completed: boolean
