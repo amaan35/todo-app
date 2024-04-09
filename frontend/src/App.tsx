@@ -5,10 +5,14 @@ import TodoItem from "./components/TodoItem";
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<TypeTodo[]>([]);
+  const fetchTodos = (): void => {
+    getTodos()
+      .then(({ data }: TypeTodo[] | any) => setTodos(data))
+      .catch((err: Error) => console.log(err));
+  };
   useEffect(() => {
     fetchTodos();
   }, []);
-
   const handleSaveTodo = (e: React.FormEvent, formData: TypeTodo): void => {
     e.preventDefault();
     addTodo(formData)
@@ -18,12 +22,6 @@ const App: React.FC = () => {
         }
         setTodos(data.todos);
       })
-      .catch((err: Error) => console.log(err));
-  };
-
-  const fetchTodos = (): void => {
-    getTodos()
-      .then(({ data: { todos } }: TypeTodo[] | any) => setTodos(todos))
       .catch((err: Error) => console.log(err));
   };
 
@@ -50,20 +48,20 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
-      <main className="App">
-        <h1>My Todos</h1>
-        <AddTodo saveTodo={handleSaveTodo} />
-        {todos?.map((todo: TypeTodo) => (
-          <TodoItem
-            key={todo._id}
-            updateTodo={handleUpdateTodo}
-            deleteTodo={handleDeleteTodo}
-            todo={todo}
-          />
-        ))}
-      </main>
-    </>
+    <div className="p-5 flex flex-col gap-5 justify-center items-center">
+      <h1 className="text-3xl font-semibold">My Todos</h1>
+      <AddTodo saveTodo={handleSaveTodo} />
+      {todos && todos.map((todo: TypeTodo) => {
+          return (
+            <TodoItem
+              key={todo._id}
+              updateTodo={handleUpdateTodo}
+              deleteTodo={handleDeleteTodo}
+              todo={todo}
+            />
+          );
+        })}
+    </div>
   );
 };
 

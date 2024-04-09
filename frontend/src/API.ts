@@ -2,12 +2,12 @@ import axios, { AxiosResponse } from "axios";
 
 const baseURL: string = "http://localhost:3001";
 
-export const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
+export const getTodos = async (): Promise<AxiosResponse<TypeTodo[]>> => {
   try {
-    const todos: AxiosResponse<ApiDataType> = await axios.get(
+    const res: AxiosResponse<TypeTodo[]> = await axios.get(
       baseURL + "/todos"
     );
-    return todos;
+    return res;
   } catch (error) {
     throw new Error();
   }

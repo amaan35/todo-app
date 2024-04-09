@@ -6,23 +6,23 @@ type Props = TodoProps & {
 };
 
 const TodoItem: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
-  const checkTodo: string = todo.completed ? "line-through" : "";
   return (
-    <div className="Card">
-      <div className="Card--text">
-        <h1 className={checkTodo}>{todo.name}</h1>
-        <span className={checkTodo}>{todo.desc}</span>
+    <div className="bg-gray-500 text-gray-200 w-[300px] h-fit rounded-lg border-2 border-gray-400 p-4">
+      <div>
+        <h1 className={`${todo.completed?"line-through":""} text-xl font-semibold`}>{todo.name}</h1>
+        <span className={`${todo.completed?"line-through":""} text-lg`}>{todo.desc}</span>
       </div>
-      <div className="Card--button">
+      <div className="flex justify-between">
         <button
+          disabled={todo.completed}
           onClick={() => updateTodo(todo)}
-          className={todo.completed ? `hide-button` : "Card--button__done"}
+          className={`${todo.completed?"bg-gray-400":"bg-green-500 hover:bg-green-600"} px-3 py-2 rounded-lg text-white`}
         >
           Complete
         </button>
         <button
           onClick={() => deleteTodo(todo._id)}
-          className="Card--button__delete"
+          className="bg-red-600 px-3 py-2 rounded-lg text-white hover:bg-red-700"
         >
           Delete
         </button>
