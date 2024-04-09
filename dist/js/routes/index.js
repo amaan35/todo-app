@@ -6,5 +6,5 @@ const router = (0, express_1.Router)();
 router.get("/todos", todos_1.getTodos);
 router.post("/addTodo", todos_1.addTodo);
 router.put("/updateTodo/:id", todos_1.updateTodo);
-router.delete("deleteTodo/:id", todos_1.deleteTodo);
+router.delete("/deleteTodo/:id", todos_1.deleteTodo);
 exports.default = router;

@@ -8,6 +8,7 @@ const todoSchema = new mongoose_1.Schema({
     },
     desc: {
         type: String,
+        required: true
     },
     completed: {
         type: Boolean,
