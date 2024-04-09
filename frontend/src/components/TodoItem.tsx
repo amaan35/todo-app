@@ -5,7 +5,7 @@ type Props = TodoProps & {
   deleteTodo: (_id: string) => void;
 };
 
-const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
+const TodoItem: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
   const checkTodo: string = todo.completed ? "line-through" : "";
   return (
     <div className="Card">
@@ -30,4 +30,4 @@ const Todo: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
     </div>
   );
 };
-export default Todo;
+export default TodoItem;

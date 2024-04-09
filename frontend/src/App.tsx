@@ -1,26 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { addTodo, deleteTodo, getTodos, updateTodo } from "./API";
+import AddTodo from "./components/AddTodo";
+import TodoItem from "./components/TodoItem";
 
-function App() {
+const App: React.FC = () => {
+  const [todos, setTodos] = useState<TypeTodo[]>([]);
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const handleSaveTodo = (e: React.FormEvent, formData: TypeTodo): void => {
+    e.preventDefault();
+    addTodo(formData)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error("Todo not saved");
+        }
+        setTodos(data.todos);
+      })
+      .catch((err: Error) => console.log(err));
+  };
+
+  const fetchTodos = (): void => {
+    getTodos()
+      .then(({ data: { todos } }: TypeTodo[] | any) => setTodos(todos))
+      .catch((err: Error) => console.log(err));
+  };
+
+  const handleUpdateTodo = (todo: TypeTodo): void => {
+    updateTodo(todo)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error("Todo not updated");
+        }
+        setTodos(data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleDeleteTodo = (_id: string): void => {
+    deleteTodo(_id)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error("Todo not deleted");
+        }
+        setTodos(data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <main className="App">
+        <h1>My Todos</h1>
+        <AddTodo saveTodo={handleSaveTodo} />
+        {todos?.map((todo: TypeTodo) => (
+          <TodoItem
+            key={todo._id}
+            updateTodo={handleUpdateTodo}
+            deleteTodo={handleDeleteTodo}
+            todo={todo}
+          />
+        ))}
+      </main>
+    </>
   );
-}
+};
 
 export default App;

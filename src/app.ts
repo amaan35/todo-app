@@ -6,6 +6,7 @@ import todoRoutes from "./routes/index";
 const app: Express = express();
 const PORT: number = 3001;
 
+app.use(express.json());
 app.use(cors());
 app.use(todoRoutes);
 

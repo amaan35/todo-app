@@ -9,6 +9,7 @@ const cors_1 = __importDefault(require("cors"));
 const index_1 = __importDefault(require("./routes/index"));
 const app = (0, express_1.default)();
 const PORT = 3001;
+app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use(index_1.default);
 mongoose_1.default.connect(`mongodb+srv://amaan:${process.env.MONGO_PASSWORD}@todocluster.dxhs107.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority&appName=todoCluster`).then(() => {
